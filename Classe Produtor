@@ -1,0 +1,19 @@
+
+public class Produtor extends Thread { // cada produtor funciona em uma thread diferente
+	private int idProdutor; // identificador
+	private Buffer pilha; // buffer
+	private int producaoTotal; // contador
+
+	public Produtor(int id, Buffer p, int producaoTotal) {
+		idProdutor = id;
+		pilha = p;
+		this.producaoTotal = producaoTotal;
+	}
+
+	public void run() {
+		for (int i = 0; i < producaoTotal; i++) {
+			pilha.set(idProdutor, i);
+		}
+		System.out.println("Produtor #" + idProdutor + " concluido!");
+	}
+}
