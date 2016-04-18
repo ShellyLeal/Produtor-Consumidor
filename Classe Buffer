@@ -7,21 +7,12 @@ public class Buffer {
 	// Os metodos get e set são sincronizados para permitir múltiplas threads
 	// sem erros
 
-	public synchronized void set(int idProdutor, int valor) { // carrega o
-																// conteúdo para
-																// o produtor
-																// colocar um
-																// produto
-																// e avisar para
-																// as threads
-																// que o produto
-																// está
-																// disponível
+	public synchronized void set(int idProdutor, int valor) { // carrega o conteúdo para o produtor colocar um produto
+    	                                                      // e avisar para as threads que o produto está disponível
 		while (disponivel == true) {
 			try {
 				System.out.println("Produtor #" + idProdutor + " esperando...");
-				wait(); // enquanto houver conteúdo disponível, o produtor
-						// aguarda
+				wait(); // enquanto houver conteúdo disponível, o produtor aguarda
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -32,21 +23,12 @@ public class Buffer {
 		notifyAll();
 	}
 
-	public synchronized int get(int idConsumidor) { // permitir o acesso do
-													// consumidor ao produto
-													// // e avisar para as
-													// threads que o produto não
-													// está mais disponível
+	public synchronized int get(int idConsumidor) { // permitir o acesso do consumidor ao produto
+    	                                               // // e avisar para as threads que o produto não está mais disponível
 		while (disponivel == false) {
 			try {
-				System.out.println("Consumidor #" + idConsumidor + " esperado..."); // enquanto
-																					// não
-																					// houver
-																					// conteúdo
-																					// disponível,
-																					// o
-																					// consumidor
-																					// aguarda
+				System.out.println("Consumidor #" + idConsumidor + " esperando..."); //enquanto não houver conteúdo disponível,
+				                                                                    // o consumidor aguarda								
 				wait();
 			} catch (Exception e) {
 				e.printStackTrace();
