@@ -1,0 +1,61 @@
+public class Buffer {
+
+	private int conteudo; // conteudo inserido pelo produtor
+	private boolean disponivel; // booleano: indica quando o conteúdo esta
+								// disponivel
+
+	// Os metodos get e set são sincronizados para permitir múltiplas threads
+	// sem erros
+
+	public synchronized void set(int idProdutor, int valor) { // carrega o
+																// conteúdo para
+																// o produtor
+																// colocar um
+																// produto
+																// e avisar para
+																// as threads
+																// que o produto
+																// está
+																// disponível
+		while (disponivel == true) {
+			try {
+				System.out.println("Produtor #" + idProdutor + " esperando...");
+				wait(); // enquanto houver conteúdo disponível, o produtor
+						// aguarda
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		conteudo = valor;
+		System.out.println("Produtor #" + idProdutor + " colocou " + conteudo);
+		disponivel = true;
+		notifyAll();
+	}
+
+	public synchronized int get(int idConsumidor) { // permitir o acesso do
+													// consumidor ao produto
+													// // e avisar para as
+													// threads que o produto não
+													// está mais disponível
+		while (disponivel == false) {
+			try {
+				System.out.println("Consumidor #" + idConsumidor + " esperado..."); // enquanto
+																					// não
+																					// houver
+																					// conteúdo
+																					// disponível,
+																					// o
+																					// consumidor
+																					// aguarda
+				wait();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Consumidor #" + idConsumidor + " consumiu: " + conteudo);
+		disponivel = false;
+		notifyAll();
+		return conteudo;
+	}
+
+}
