@@ -1,4 +1,4 @@
-# Produtor-e-Consumidor
+# Produtor/Consumidor
 Descrição do problema do Produtor e Consumidor para casos de concorrência.
 
 O compartilhamento para múltiplos produtores e consumidores se resolve por meio de threads. 
